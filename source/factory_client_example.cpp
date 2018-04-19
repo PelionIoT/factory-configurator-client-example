@@ -24,10 +24,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#include "PlatIncludes.h"
-#include "pal_BSP.h"
-
-#include "pal.h"
+#include "common_setup.h"
 #include "factory_configurator_client.h"
 #include "ftcd_comm_base.h"
 #include "fce_common_helper.h"
@@ -40,75 +37,15 @@
 #define TRACE_GROUP     "fce"  // Maximum 4 characters
 
 static int factory_example_success = EXIT_FAILURE;
-static pal_args_t g_args = { 0 };
-
-// Set primary and backup File System  path using MBED_CLOUD_CLIENT_CONFIG_DIR and MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR definitions
-#if defined(MBED_CLOUD_CLIENT_CONFIG_DIR) || defined(MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR)
-static int setup_file_system_dir(void)
-{
-    palStatus_t pal_status = PAL_SUCCESS;
-    pal_fsStorageID_t  dataID; 
-
-
-#ifdef MBED_CLOUD_CLIENT_CONFIG_DIR
-    //Create directory
-    pal_status = pal_fsMkDir(MBED_CLOUD_CLIENT_CONFIG_DIR);
-    if (pal_status != PAL_SUCCESS) {
-        if (pal_status != PAL_ERR_FS_NAME_ALREADY_EXIST) {
-            tr_error("setup_file_system_dir: can't pal_fsMkdir %s - error %ld", MBED_CLOUD_CLIENT_CONFIG_DIR, pal_status);
-            return pal_status;
-        }
-    }
-
-    //Make mount for primary partition.
-    dataID = PAL_FS_PARTITION_PRIMARY;
-    pal_status = pal_fsSetMountPoint(dataID, MBED_CLOUD_CLIENT_CONFIG_DIR);
-    if (pal_status != PAL_SUCCESS) {
-        tr_error("setup_file_system_dir: - can't set fsSetMountPoint to PAL (%d, %s)\n", (int)dataID, MBED_CLOUD_CLIENT_CONFIG_DIR);
-        return pal_status;
-
-    }
-    tr_info("Primary config dir/mountpoint set to %s", MBED_CLOUD_CLIENT_CONFIG_DIR);
-
-#endif
-
-#ifdef MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR
-    pal_status = pal_fsMkDir(MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR);
-    if (pal_status != PAL_SUCCESS) {
-        if (pal_status != PAL_ERR_FS_NAME_ALREADY_EXIST) {
-            tr_error("setup_file_system_dir: can't pal_fsMkdir %s - error %d", MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR, pal_status);
-            return pal_status;
-        }
-    }
-
-    dataID = PAL_FS_PARTITION_SECONDARY;
-    pal_status = pal_fsSetMountPoint(dataID, MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR);
-    if (pal_status != PAL_SUCCESS) {
-        tr_error("setup_file_system_dir: can't set fsSetMountPoint to PAL (%d, %s)", (int)dataID, MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR);
-        return pal_status;
-    }
-    tr_info("Secondary config dir/mountpoint set to %s", MBED_CLOUD_CLIENT_CONFIG_BACKUP_DIR);
-#endif
-
-    return 0;
-}
-#else
-/* This is the default case -  File System main and backup directories configured by pal/esfs using default paths*/
-static int setup_file_system_dir(void)
-{
-    return 0;
-}
-#endif
 
 /**
 * Device factory flow
 * - Runs in a task of its own
 */
-static void factory_flow_task(pal_args_t *args)
+static void factory_flow_task()
 {
     bool success;
     fcc_status_e fcc_status = FCC_STATUS_SUCCESS;
-    palStatus_t pal_status;
     int res;
 
     FtcdCommBase *ftcd_comm = NULL;
@@ -119,19 +56,19 @@ static void factory_flow_task(pal_args_t *args)
     uint8_t *response_message = NULL;
     size_t response_message_size = 0;
 
-    // Unused parameter
-    (void)(args);
+    mcc_platform_sw_build_info();
+
+    // Initialize storage
+    success = mcc_platform_storage_init() == 0;
+    if (success != true) {
+        tr_error("Failed initializing mcc platform storage\n");
+        return;
+    }
 
     fcc_status = fcc_init();
     if (fcc_status != FCC_STATUS_SUCCESS) {
         tr_error("Failed initializing factory configurator client\n");
         return;
-    }
-
-    res = setup_file_system_dir();
-    if (res != 0) {
-        tr_error("setup_file_system_dir failed with status %d! - exit\n", res);
-        goto out0;
     }
 
     setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
@@ -217,11 +154,7 @@ out0:
 */
 int main(int argc, char * argv[])
 {
-    bspStatus_t bsp_result = BSP_SUCCESS;
     bool success = false;
-
-    g_args.argc = 0;
-    g_args.argv = NULL;
 
     // careful, mbed-trace initialization may happen at this point if and only if we 
     // do NOT use mutex by passing "true" at the second param for this functions.
@@ -235,10 +168,10 @@ int main(int argc, char * argv[])
 
     success = false;
 
-    bsp_result = initPlatform(NULL);
-    if (bsp_result == BSP_SUCCESS) {
-       // setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
-        success = runProgram(&factory_flow_task, &g_args);
+    success = (mcc_platform_init() == 0);
+    if (success) {
+        // setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
+        success = mcc_platform_run_program(&factory_flow_task);
     }
 
     // Print dynamic RAM statistics in case ENABLE_RAM_PROFILING cflag introduced

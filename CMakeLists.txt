@@ -8,7 +8,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-trace)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-trace/mbed-trace)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/nanostack-libservice/mbed-client-libservice)
 
-# # factory-configurator-client
+# factory-configurator-client
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/factory-configurator-client/factory-configurator-client)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/ftcd-comm-base/ftcd-comm-base)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/ftcd-comm-socket/ftcd-comm-socket)
@@ -17,9 +17,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-config
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/mbed-trace-helper/mbed-trace-helper)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/fcc-output-info-handler/fcc-output-info-handler)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/utils/utils)
-# PAL's example code reference
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-client-pal/Examples/PlatformBSP/Include)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-client-pal/Test/Unitest/Includes)
+
+# mbed-cloud-client-platform-common
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client-platform-common/include)
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
 	add_definitions(-DMBED_TRACE_MAX_LEVEL=TRACE_LEVEL_INFO -DPAL_NUMBER_OF_PARTITIONS=1 -DPAL_PRIMARY_PARTITION_PRIVATE=0 -DPAL_SECONDARY_PARTITION_PRIVATE=0)
@@ -33,8 +33,6 @@ SET(
 	${CMAKE_CURRENT_SOURCE_DIR}/source/factory_client_example.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_${SA_PV_OS_NAME}_socket_helper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_common_helper.h
-	${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-client-pal/Examples/PlatformBSP/pal_insecure_ROT.c
-
 )
 
 message ("*********************************************************************")
@@ -58,6 +56,7 @@ CREATE_TEST_LIBRARY(factory-configurator-client-example "${factory-configurator-
 add_subdirectory(mbed-cloud-client/factory-configurator-client ${CMAKE_BINARY_DIR}/factory-configurator-client)
 add_subdirectory(mbed-cloud-client/mbed-client-pal ${CMAKE_BINARY_DIR}/mbed-client-pal)
 add_subdirectory(mbed-cloud-client/mbed-trace ${CMAKE_BINARY_DIR}/mbed-trace)
+add_subdirectory(mbed-cloud-client-platform-common ${CMAKE_BINARY_DIR}/mbed-cloud-client-platform-common)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(hasParent)
