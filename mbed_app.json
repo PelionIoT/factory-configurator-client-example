@@ -1,14 +1,14 @@
 {
     "macros": [
         "MBED_TRACE_MAX_LEVEL=TRACE_LEVEL_INFO",
-        "MBEDTLS_CTR_DRBG_MAX_REQUEST=2048",
-        "MBEDTLS_X509_CSR_WRITE_C",
-        "MBEDTLS_X509_CREATE_C",
         "PAL_NUMBER_OF_PARTITIONS=1",
         "PAL_PRIMARY_PARTITION_PRIVATE=0",
         "PAL_SECONDARY_PARTITION_PRIVATE=0",
+        "MCC_PLATFORM_AUTO_PARTITION=1",
         "MBEDTLS_USER_CONFIG_FILE=\"mbed-cloud-client/mbed-client-pal/Configs/mbedTLS/mbedTLSConfig_mbedOS.h\"",
-        "PAL_USER_DEFINED_CONFIGURATION=\"source/sotp_fs_config_MbedOS.h\""
+        "PAL_USER_DEFINED_CONFIGURATION=\"source/sotp_fs_config_MbedOS.h\"",
+        "MBED_CLIENT_USER_CONFIG_FILE=\"source/mbed_cloud_client_user_config.h\"",
+        "MBED_CLOUD_CLIENT_USER_CONFIG_FILE=\"source/mbed_cloud_client_user_config.h\""
     ],
 
     "target_overrides": {
@@ -18,9 +18,9 @@
             "target.features_add": [ "COMMON_PAL", "STORAGE" ],
             "mbed-trace.enable": 1,
             "lwip.tcpip-thread-stacksize": 2400,
-             "storage-selector.storage": "SD_CARD",
+            "storage-selector.storage": "SD_CARD",
             "storage-selector.filesystem": "FAT",
-            "storage-selector.mount-point": "\"/sd\"",
+            "storage-selector.mount-point": "\"sd\"",
             "update-client.storage-address"  : "(1024*1024*64)",
             "update-client.storage-size"     : "(1024*1024*2)",
             "update-client.storage-locations": "1"
@@ -55,6 +55,12 @@
         }
     },
     "config": {
+        "main-stack-size": {
+            "value": 7168
+        },
+        "network-interface": {
+            "value": "ETHERNET"
+        },
         "sotp-section-1-address": {
             "help": "Flash sector address for SOTP sector 1",
             "macro_name": "PAL_INTERNAL_FLASH_SECTION_1_ADDRESS",

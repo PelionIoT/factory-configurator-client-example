@@ -24,7 +24,7 @@ FCC_EXAMPLE_TOP=$MY_DIR
 source build-mbed-os-common.sh
 
 mbed compile \
-	 -v -c --source .  --source=mbed-cloud-client/mbed-client-pal/Examples/PlatformBSP  --artifact-name factory-configurator-client-example  --build   "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE" -t "$TOOLCHAIN" -m "$PLATFORM" --profile="$CFLAGS" -D"$INTERFACE"
+	-v -c --artifact-name factory-configurator-client-example --build "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE" -t "$TOOLCHAIN" -m "$PLATFORM" --profile="$CFLAGS" -D"$INTERFACE"
 
 # Find correct bootloader
 echo $PLATFORM
