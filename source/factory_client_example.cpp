@@ -46,7 +46,6 @@ static void factory_flow_task()
 {
     bool success;
     fcc_status_e fcc_status = FCC_STATUS_SUCCESS;
-    int res;
 
     FtcdCommBase *ftcd_comm = NULL;
     ftcd_comm_status_e ftcd_comm_status = FTCD_COMM_STATUS_SUCCESS;
@@ -89,46 +88,52 @@ static void factory_flow_task()
 
     mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Factory flow begins...");
 
-    // wait for message from communication layer
-    ftcd_comm_status = ftcd_comm->wait_for_message(&input_message, &input_message_size);
-    if (ftcd_comm_status == FTCD_COMM_STATUS_SUCCESS) {
+ 
+	fcc_status = fcc_storage_delete();
+	if (fcc_status != FCC_STATUS_SUCCESS) {
+		tr_error("Failed to reset storage\n");
+		goto out2;
+	}
 
-        fcc_status = fcc_storage_delete();
-        if (fcc_status != FCC_STATUS_SUCCESS) {
-            tr_error("Failed to reset storage\n");
-            goto out2;
+     while (true) {
+        // wait for message from communication layer
+        ftcd_comm_status = ftcd_comm->wait_for_message(&input_message, &input_message_size);
+        if (ftcd_comm_status == FTCD_COMM_STATUS_SUCCESS) {
+            // process request and get back response
+            fcc_status = fcc_bundle_handler(input_message, input_message_size, &response_message, &response_message_size);
+            if ((fcc_status == FCC_STATUS_BUNDLE_RESPONSE_ERROR) || (response_message == NULL) || (response_message_size == 0)) {
+                ftcd_comm_status = FTCD_COMM_FAILED_TO_PROCESS_DATA;
+                mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Failed to process data");
+            }
+        } else {
+            tr_error("Failed getting factory message");
         }
 
-        // process request and get back response
-        fcc_status = fcc_bundle_handler(input_message, input_message_size, &response_message, &response_message_size);
-        if ((fcc_status == FCC_STATUS_BUNDLE_RESPONSE_ERROR) || (response_message == NULL) || (response_message_size == 0)) {
-            ftcd_comm_status = FTCD_COMM_FAILED_TO_PROCESS_DATA;
-            mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Failed to process data");
+        ftcd_comm_status_first_err = ftcd_comm_status;
+        ftcd_comm_status = ftcd_comm->send_response(response_message, response_message_size, ftcd_comm_status);
+        if (ftcd_comm_status != FTCD_COMM_STATUS_SUCCESS) {
+            ftcd_comm->send_response(NULL, 0, ftcd_comm_status);
+            if (ftcd_comm_status_first_err == FTCD_COMM_STATUS_SUCCESS) {
+                ftcd_comm_status_first_err = ftcd_comm_status;
+            }
         }
-    } else {
-        tr_error("Failed getting factory message");
-    }
 
-    ftcd_comm_status_first_err = ftcd_comm_status;
-    ftcd_comm_status = ftcd_comm->send_response(response_message, response_message_size, ftcd_comm_status);
-    if (ftcd_comm_status != FTCD_COMM_STATUS_SUCCESS) {
-        ftcd_comm->send_response(NULL, 0, ftcd_comm_status);
+        if (input_message) {
+            fcc_free(input_message);
+        }
+        if (response_message) {
+            fcc_free(response_message);
+        }
+
         if (ftcd_comm_status_first_err == FTCD_COMM_STATUS_SUCCESS) {
-            ftcd_comm_status_first_err = ftcd_comm_status;
+            // Success
+            mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Successfully processed comm message");
+            factory_example_success = EXIT_SUCCESS;
         }
-    }
 
-    if (input_message) {
-        fcc_free(input_message);
-    }
-    if (response_message) {
-        fcc_free(response_message);
-    }
-
-    if (ftcd_comm_status_first_err == FTCD_COMM_STATUS_SUCCESS) {
-        // Success
-        mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Successfully processed comm message");
-        factory_example_success = EXIT_SUCCESS;
+        if (fcc_is_session_finished()) {
+            break;
+        }
     }
 
 out2:
@@ -143,11 +148,13 @@ out0:
     fcc_status = fcc_finalize();
     if (fcc_status != FCC_STATUS_SUCCESS) {
         tr_error("Failed finalizing factory client\n");
+    } else {
+        mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Successfully completed factory flow");
     }
+
 
     fflush(stdout);
 }
-
 
 /**
 * Example main
