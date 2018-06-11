@@ -70,7 +70,7 @@
     },
     "config": {
         "main-stack-size": {
-            "value": 7168
+            "value": 8192
         },
         "primary-partition-size": {
             "help": "The primary partition size in bytes on the target device storage",
