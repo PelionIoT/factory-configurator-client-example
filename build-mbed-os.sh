@@ -24,12 +24,18 @@ FCC_EXAMPLE_TOP=$MY_DIR
 source build-mbed-os-common.sh
 
 mbed compile \
-	-v -c --artifact-name factory-configurator-client-example --build "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE" -t "$TOOLCHAIN" -m "$PLATFORM" --profile="$CFLAGS" -D"$INTERFACE"
+	-v -c --artifact-name factory-configurator-client-example --build "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE/$FS" -t "$TOOLCHAIN" -m "$PLATFORM" --profile="$CFLAGS" -D"$INTERFACE" --app-config "$MBED_APP_FILE"
 
 # Find correct bootloader
 echo $PLATFORM
 BOARD=$(echo $PLATFORM | tr '[:upper:]' '[:lower:]')
 echo $BOARD
 
+# This may cause issues when compiling with different mbed_app.json. 
+# Currenlty there is no use-case for thiss, so only Warning is printed.
+# Should be resolved once Jira ticket IOTUC-499 will be solved
+echo -e "\033[33mWARNING: json file that is used in combine script is mbed_app.json!!!\033[0m"
+
 #create combined with bootloader executable 
-python tools/combine_bootloader_with_app.py -a "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE/factory-configurator-client-example.bin" -o "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE/factory-configurator-client-example.hex" -m "$BOARD"
+python tools/combine_bootloader_with_app.py -a "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE/$FS/factory-configurator-client-example.bin" -o "BUILD/$PLATFORM/$TOOLCHAIN/$INTERFACE/$FS/factory-configurator-client-example.hex" -m "$BOARD"
+

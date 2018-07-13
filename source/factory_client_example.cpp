@@ -144,7 +144,6 @@ out2:
 out1:
     mbed_trace_helper_finish();
 
-out0:
     fcc_status = fcc_finalize();
     if (fcc_status != FCC_STATUS_SUCCESS) {
         tr_error("Failed finalizing factory client\n");
