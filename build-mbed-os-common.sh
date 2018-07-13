@@ -26,11 +26,13 @@ fi
 TOOLCHAIN=
 PLATFORM=
 INTERFACE=
+MBED_APP_FILE=
 ENABLE_RAM_PROFILING=
 
 toolchains=( ARM ARMC6 GCC_ARM IAR )
-platforms=( K64F NUCLEO_F429ZI UBLOX_EVK_ODIN_W2 )
+platforms=( K64F NUCLEO_F429ZI UBLOX_EVK_ODIN_W2 NUCLEO_F411RE)
 interfaces=( FCE_SERIAL_INTERFACE FCE_ETHERNET_INTERFACE )
+mbed_app_files=( DEFAULT LITTLE_FS )
 
 function usage() {
     echo ""
@@ -38,8 +40,9 @@ function usage() {
     echo ""
     echo "   -h --help"
     echo "   -t --toolchain     toolchain <ARM, GCC_ARM, IAR>" 
-    echo "   -p --platform      platform type <K64F, NUCLEO_F429ZI, UBLOX_EVK_ODIN_W2>"
+    echo "   -p --platform      platform type <K64F, NUCLEO_F429ZI, UBLOX_EVK_ODIN_W2, NUCLEO_F411RE>"
     echo "   -i --iface         communication interface <FCE_SERIAL_INTERFACE, FCE_ETHERNET_INTERFACE>"
+    echo "   -c --cfile         mbed app file - for default used mbed_app.json"
     echo ""
     echo "   e.g.: $0 --toolchain=GCC_ARM --platform=K64F --iface=FCE_SERIAL_INTERFACE"
     echo ""
@@ -76,11 +79,15 @@ for i in "$@"; do
         -i | --iface)
             if is_valid_param interfaces "$VALUE"; then INTERFACE="$VALUE"; else echo "Invalid interface '$VALUE'"; fi
             ;;
+        -c | --cfile)
+            if is_valid_param mbed_app_files "$VALUE"; then  MBED_APP_FILE="$VALUE"; else echo "Invalid mbed app config '$VALUE'"; fi
+            ;;
         --profiling)
             TOOLCHAIN="ARMC6"
             PLATFORM="K64F"
             INTERFACE="FCE_ETHERNET_INTERFACE"
             ENABLE_RAM_PROFILING=-DFCC_MEM_STATS_ENABLED
+            MBED_APP_FILE="DEFAULT"
             ;;
         *)
             echo "ERROR: unknown parameter \"$PARAM\""
@@ -96,6 +103,21 @@ if [ -z "$TOOLCHAIN" ] || [ -z "$PLATFORM" ] || [ -z "$INTERFACE" ]; then
     exit
 fi
 
+if [ "$PLATFORM" = "NUCLEO_F411RE" ] && [ "$INTERFACE" != "FCE_SERIAL_INTERFACE" ]; then
+	echo "Error: NUCLEO_F411RE platform supports only Serial interface"
+	exit
+fi
+	
+if  [ "LITTLE_FS"  =  "$MBED_APP_FILE" ]; then
+    MBED_APP_FILE="$FCC_EXAMPLE_TOP/devenv/configs/ltfs_mbed_app.json"
+    FS="LFS"; 
+else
+    MBED_APP_FILE="$FCC_EXAMPLE_TOP/mbed_app.json"	
+    FS="FAT"
+fi
+
+
+
 # set build profile
 CFLAGS="$FCC_EXAMPLE_TOP/mbed-os/tools/profiles/release.json"
 if [[ ! -z "$DEBUG" ]]; then
@@ -109,6 +131,7 @@ echo "*  TOOLCHAIN=${TOOLCHAIN}"
 echo "*  PLATFORM=${PLATFORM}"
 echo "*  INTERFACE=${INTERFACE}"
 echo "*  CFLAGS_FILE=${CFLAGS}"
+echo "*  MBED_APP_FILE=${MBED_APP_FILE}"
 if [[ ! -z "$ENABLE_RAM_PROFILING" ]]; then
     echo "*  PROFILING=yes"
 fi

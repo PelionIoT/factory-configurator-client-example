@@ -16,17 +16,13 @@
 
 #ifdef FCE_SERIAL_INTERFACE
 
-#ifndef MBED_CONF_PLATFORM_STDIO_BAUD_RATE
-#define MBED_CONF_PLATFORM_STDIO_BAUD_RATE 115200
-#endif
-
 #include "fce_common_helper.h"
 #include "ftcd_comm_serial.h"
 
 FtcdCommBase *fce_create_comm_interface(void)
 {
     const uint8_t msg_header_token[] = FTCD_MSG_HEADER_TOKEN_FCC;
-    return new FtcdCommSerial(USBTX, USBRX, MBED_CONF_PLATFORM_STDIO_BAUD_RATE, FTCD_COMM_NET_ENDIANNESS_LITTLE, msg_header_token, true);
+    return new FtcdCommSerial(FTCD_COMM_NET_ENDIANNESS_LITTLE, msg_header_token, true);
 }
 
 void fce_destroy_comm_interface(void)

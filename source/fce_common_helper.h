@@ -15,7 +15,7 @@
 // ----------------------------------------------------------------------------
 
 #include <stdlib.h>
-#include "ftcd_comm_socket.h"
+#include "ftcd_comm_base.h"
 
 /**
 * The communication socket port
