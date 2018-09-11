@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#include "common_setup.h"
+#include "mcc_common_setup.h"
 #include "factory_configurator_client.h"
 #include "ftcd_comm_base.h"
 #include "fce_common_helper.h"

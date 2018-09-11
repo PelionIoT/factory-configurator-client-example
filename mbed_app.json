@@ -37,6 +37,22 @@
             "mbedtls-user-config-file": "\"mbedTLSConfig_mbedOS.h\"",
             "pal-user-defined-config": "\"sotp_fs_config_MbedOS.h\""
         },
+        "K66F": {
+            "storage-selector.storage": "SD_CARD",
+            "storage-selector.filesystem": "FAT",
+            "storage-selector.mount-point": "\"sd\"",
+            "lwip.tcpip-thread-stacksize": 2400,
+            "target.mbed_app_start": "0x0000a400",
+            "update-client.bootloader-details": "0x00007188",
+            "sotp-section-1-address": "(32*1024)",
+            "sotp-section-1-size": "(4*1024)",
+            "sotp-section-2-address": "(36*1024)",
+            "sotp-section-2-size": "(4*1024)",
+            "update-client.application-details": "(40*1024)",
+            "primary-partition-size": "(1024*1024*1024)",
+            "mbedtls-user-config-file": "\"mbedTLSConfig_mbedOS.h\"",
+            "pal-user-defined-config": "\"sotp_fs_config_MbedOS.h\""
+        },
         "NUCLEO_F429ZI": {
             "storage-selector.storage": "SD_CARD",
             "storage-selector.filesystem": "FAT",
