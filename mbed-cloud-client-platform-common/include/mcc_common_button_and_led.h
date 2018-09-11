@@ -18,8 +18,8 @@
 // INCLUDES
 ///////////
 
-#ifndef COMMON_BUTTON_AND_LED_H
-#define COMMON_BUTTON_AND_LED_H
+#ifndef MCC_COMMON_BUTTON_AND_LED_H
+#define MCC_COMMON_BUTTON_AND_LED_H
 
 #include <stdint.h>
 
@@ -41,4 +41,4 @@ uint8_t mcc_platform_init_button_and_led(void);
 #ifdef __cplusplus
 }
 #endif
-#endif // COMMON_BUTTON_AND_LED_H
+#endif // MCC_COMMON_BUTTON_AND_LED_H

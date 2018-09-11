@@ -52,15 +52,4 @@ add_definitions(-DETHERNET_LINUX_IFACE_NAME=${TMPD})
 message("ETHERNET_LINUX_IFACE_NAME=${ETHNAME}")
 
 CREATE_TEST_LIBRARY(factory-configurator-client-example "${factory-configurator-client-example}" "")
-
-add_subdirectory(mbed-cloud-client/factory-configurator-client ${CMAKE_BINARY_DIR}/factory-configurator-client)
-add_subdirectory(mbed-cloud-client/mbed-client-pal ${CMAKE_BINARY_DIR}/mbed-client-pal)
-add_subdirectory(mbed-cloud-client/mbed-trace ${CMAKE_BINARY_DIR}/mbed-trace)
-add_subdirectory(mbed-cloud-client-platform-common ${CMAKE_BINARY_DIR}/mbed-cloud-client-platform-common)
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(hasParent)
-		set (SRC_LIBS ${SRC_LIBS} PARENT_SCOPE)
-		set (TEST_LIBS ${TEST_LIBS} PARENT_SCOPE)
-endif()
-
+ADDSUBDIRS()
