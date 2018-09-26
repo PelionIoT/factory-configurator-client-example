@@ -95,7 +95,7 @@ static void factory_flow_task()
 		goto out2;
 	}
 
-     while (true) {
+    while (true) {
         // wait for message from communication layer
         ftcd_comm_status = ftcd_comm->wait_for_message(&input_message, &input_message_size);
         if (ftcd_comm_status == FTCD_COMM_STATUS_SUCCESS) {
@@ -142,7 +142,6 @@ out2:
     fce_destroy_comm_interface();
 
 out1:
-    mbed_trace_helper_finish();
 
     fcc_status = fcc_finalize();
     if (fcc_status != FCC_STATUS_SUCCESS) {
@@ -151,6 +150,7 @@ out1:
         mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Successfully completed factory flow");
     }
 
+    mbed_trace_helper_finish();
 
     fflush(stdout);
 }
