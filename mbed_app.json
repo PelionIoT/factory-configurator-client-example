@@ -14,7 +14,7 @@
             "platform.stdio-baud-rate": 115200,
             "platform.stdio-convert-newlines": true,
             "target.components_add": ["SD"],
-            "target.features_add": [ "COMMON_PAL", "BOOTLOADER", "STORAGE" ],
+            "target.features_add": [ "BOOTLOADER", "STORAGE" ],
             "mbed-trace.enable": 1,
             "update-client.storage-address": "(1024*1024*64)",
             "update-client.storage-size": "(1024*1024*2)",
