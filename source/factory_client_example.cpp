@@ -96,6 +96,7 @@ static void factory_flow_task()
 	}
 
     while (true) {
+        factory_example_success = EXIT_FAILURE;
         // wait for message from communication layer
         ftcd_comm_status = ftcd_comm->wait_for_message(&input_message, &input_message_size);
         if (ftcd_comm_status == FTCD_COMM_STATUS_SUCCESS) {
@@ -146,10 +147,11 @@ out1:
     fcc_status = fcc_finalize();
     if (fcc_status != FCC_STATUS_SUCCESS) {
         tr_error("Failed finalizing factory client\n");
-    } else {
-        mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Successfully completed factory flow");
     }
 
+    if (factory_example_success == EXIT_SUCCESS) {
+        mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Successfully completed factory flow");
+    }
     mbed_trace_helper_finish();
 
     fflush(stdout);

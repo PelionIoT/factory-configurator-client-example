@@ -19,6 +19,9 @@
 #include "fce_common_helper.h"
 #include "EthernetInterface.h"
 #include "ftcd_comm_socket.h"
+#include "mbed-trace/mbed_trace.h"
+
+#define TRACE_GROUP     "fce"  // Maximum 4 characters
 
 EthernetInterface g_socket_iface;
 
@@ -27,7 +30,7 @@ FtcdCommBase *fce_create_comm_interface(void)
     // Opens Ethernet interface connection
     int rc = g_socket_iface.connect();
     if (rc != 0) {
-        printf("Failed connecting to Ethernet interface!\n");
+        tr_error("Failed connecting to Ethernet interface!\n");
         return NULL;
     }
 
