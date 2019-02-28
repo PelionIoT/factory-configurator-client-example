@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// Copyright 2017-2018 ARM Ltd.
+// Copyright 2018 ARM Ltd.
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -16,18 +16,46 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------
 
-#ifndef MBED_CLOUD_CLIENT_USER_CONFIG_H
-#define MBED_CLOUD_CLIENT_USER_CONFIG_H
+#include "cos.h"
 
-// Defines to pass MbedCloudClientConfigCheck.h checks (the values are meaningless)
+#include <assert.h>
 
-#define MBED_CLOUD_CLIENT_ENDPOINT_TYPE                                "default"
-#if defined(__linux__) || defined(TARGET_LIKE_MBED)
-#define MBED_CLOUD_CLIENT_SUPPORT_UPDATE
-#endif
-#define MBED_CLOUD_CLIENT_LIFETIME                                     0
-#define SN_COAP_MAX_BLOCKWISE_PAYLOAD_SIZE                             128
-#define MBED_CLOUD_CLIENT_UPDATE_BUFFER                                1024
-#define MBED_CLOUD_CLIENT_TRANSPORT_MODE_TCP
+void* operator new(size_t count)
+{
+    return COS_Malloc((UINT32)count, COS_MMI_HEAP);
+}
 
-#endif /* MBED_CLOUD_CLIENT_USER_CONFIG_H */
+void* operator new[](size_t count)
+{
+    return COS_Malloc((UINT32)count, COS_MMI_HEAP);
+}
+
+void operator delete(void* ptr)
+{
+    // unlike other free() implementations, the COS version does not
+    // handle NULL
+    if (ptr) {
+        COS_Free(ptr);
+    }
+}
+
+// XXX: m2mfirmware needs this for some reason
+void operator delete(void *ptr, size_t sz)
+{
+    if (ptr) {
+        COS_Free(ptr);
+    }
+}
+
+void operator delete[](void* ptr)
+{
+    if (ptr) {
+        COS_Free(ptr);
+    }
+}
+
+extern "C"
+void __cxa_pure_virtual()
+{
+    assert(false);
+}

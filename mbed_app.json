@@ -1,123 +1,119 @@
 {
     "macros": [
-        "MBED_TRACE_MAX_LEVEL=TRACE_LEVEL_INFO",
-        "PAL_NUMBER_OF_PARTITIONS=1",
-        "MCC_PLATFORM_AUTO_PARTITION=1",
-        "MCC_PLATFORM_PARTITION_MODE=1",
         "MBED_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\"",
         "MBED_CLOUD_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\""
     ],
-
     "target_overrides": {
         "*": {
-            "platform.stdio-buffered-serial": true,
-            "platform.stdio-baud-rate": 115200,
-            "platform.stdio-convert-newlines": true,
-            "target.components_add": ["SD"],
-            "target.features_add": [ "BOOTLOADER", "STORAGE" ],
-            "mbed-trace.enable": 1,
-            "update-client.storage-address": "(1024*1024*64)",
-            "update-client.storage-size": "(1024*1024*2)",
-            "update-client.storage-locations": "1",
-            "target.OUTPUT_EXT": "hex"
+            "platform.stdio-buffered-serial"             : true,
+            "platform.stdio-baud-rate"                   : 115200,
+            "platform.stdio-convert-newlines"            : true,
+            "target.features_add"                        : [ "BOOTLOADER", "STORAGE" ],
+            "mbed-trace.enable"                          : 1,
+            "mbed-cloud-client.external-sst-support"     : 1,
+            "target.OUTPUT_EXT"                          : "hex"
         },
         "K64F": {
-            "lwip.tcpip-thread-stacksize": 2400,
-            "update-client.bootloader-details": "0x00007188",
-            "sotp-section-1-address": "(32*1024)",
-            "sotp-section-1-size": "(4*1024)",
-            "sotp-section-2-address": "(36*1024)",
-            "sotp-section-2-size": "(4*1024)",
-            "update-client.application-details": "(40*1024)",
-            "primary-partition-size": "(1024*1024*1024)",
-            "mbedtls-user-config-file": "\"mbedTLSConfig_mbedOS.h\"",
-            "pal-user-defined-config": "\"sotp_fs_config_MbedOS.h\""
+            "lwip.tcpip-thread-stacksize"                : 2400,
+            "target.bootloader_img"                      : "tools/mbed-bootloader-k64f-block_device-kvstore-v4.0.0.bin",
+            "target.header_offset"                       : "0xa000",
+            "target.app_offset"                          : "0xa400",            
+            "storage.storage_type"                       : "FILESYSTEM",
+            "storage_filesystem.filesystem"              : "LITTLE",
+            "storage_filesystem.blockdevice"             : "SD",
+            "storage_filesystem.internal_base_address"   : "(32*1024)",
+            "storage_filesystem.rbp_internal_size"       : "(8*1024)",
+            "storage_filesystem.external_base_address"   : "0x0",
+            "storage_filesystem.external_size"           : "(1024*1024*64)",
+            "update-client.bootloader-details"           : "0x00007188",
+            "update-client.application-details"          : "(40*1024)",
+            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
+            "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         },
         "K66F": {
-            "lwip.tcpip-thread-stacksize": 2400,
-            "update-client.bootloader-details": "0x00007188",
-            "sotp-section-1-address": "(32*1024)",
-            "sotp-section-1-size": "(4*1024)",
-            "sotp-section-2-address": "(36*1024)",
-            "sotp-section-2-size": "(4*1024)",
-            "update-client.application-details": "(40*1024)",
-            "primary-partition-size": "(1024*1024*1024)",
-            "mbedtls-user-config-file": "\"mbedTLSConfig_mbedOS.h\"",
-            "pal-user-defined-config": "\"sotp_fs_config_MbedOS.h\""
+            "lwip.tcpip-thread-stacksize"                : 2400,
+            "target.bootloader_img"                      : "tools/mbed-bootloader-k66f-internal_flash-no_rot-v4.0.0.bin",
+            "target.header_offset"                       : "0x8000",
+            "target.app_offset"                          : "0x8400",            
+            "storage.storage_type"                       : "TDB_INTERNAL",
+            "storage_tdb_internal.internal_base_address" : "(1024*1024)",
+            "storage_tdb_internal.internal_size"         : "(96*1024)",
+            "update-client.bootloader-details"           : "0x4D58",
+            "update-client.application-details"          : "(32*1024)",
+            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
+            "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         },
         "NUCLEO_F429ZI": {
-            "lwip.tcpip-thread-stacksize": 2400,
-            "update-client.bootloader-details" : "0x080078CC",
-            "sotp-section-1-address"           : "(0x08000000+32*1024)",
-            "sotp-section-1-size"              : "(16*1024)",
-            "sotp-section-2-address"           : "(0x08000000+48*1024)",
-            "sotp-section-2-size"              : "(16*1024)",
-            "update-client.application-details": "(0x08000000+64*1024)",
-            "primary-partition-size": "(1024*1024*4)",
-            "mbedtls-user-config-file": "\"mbedTLSConfig_mbedOS.h\"",
-            "pal-user-defined-config": "\"sotp_fs_config_MbedOS.h\""
+            "lwip.tcpip-thread-stacksize"                : 2400,
+            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f429zi-internal_flash-no_rot-v4.0.0.bin",
+            "target.header_offset"                       : "0x8000",
+            "target.app_offset"                          : "0x8400",            
+            "update-client.bootloader-details"           : "0x080078CC",
+            "storage_tdb_internal.internal_base_address" : "(MBED_ROM_START+1024*1024)",
+            "storage_tdb_internal.internal_size"         : "(128*1024)",
+            "storage.storage_type"                       : "TDB_INTERNAL",
+            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
+            "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         },
         "UBLOX_EVK_ODIN_W2": {
-            "lwip.tcpip-thread-stacksize": 2400,
-            "update-client.bootloader-details": "0x08007300",
-            "sotp-section-1-address": "(0x08000000+32*1024)",
-            "sotp-section-1-size": "(16*1024)",
-            "sotp-section-2-address": "(0x08000000+48*1024)",
-            "sotp-section-2-size": "(16*1024)",
-            "update-client.application-details": "(0x08000000+64*1024)",
-            "primary-partition-size": "(1024*1024*4)",
-            "mbedtls-user-config-file": "\"mbedTLSConfig_mbedOS.h\"",
-            "pal-user-defined-config": "\"sotp_fs_config_MbedOS.h\""
+            "lwip.tcpip-thread-stacksize"                : 2400,
+            "target.bootloader_img"                      : "tools/mbed-bootloader-ublox_evk_odin_w2-block_device-kvstore-v4.0.0.bin",		
+            "target.header_offset"                       : "0x10000",
+            "target.app_offset"                          : "0x10400",            
+            "storage.storage_type"                       : "FILESYSTEM",
+            "storage_filesystem.filesystem"              : "LITTLE",
+            "storage_filesystem.blockdevice"             : "SD",
+            "storage_filesystem.internal_base_address"   : "(0x08000000+32*1024)",
+            "storage_filesystem.rbp_internal_size"       : "(32*1024)",
+            "storage_filesystem.external_base_address"   : "0x0",
+            "storage_filesystem.external_size"           : "(1024*1024*64)",
+            "update-client.bootloader-details"           : "0x08007300",
+            "update-client.application-details"          : "(0x08000000+64*1024)",
+            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
+            "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         },
-        "NUCLEO_F411RE": {
-            "update-client.bootloader-details" : "(0x08000000+30*1024)",
-            "sotp-section-1-address"           : "(0x08000000+32*1024)",
-            "sotp-section-1-size"              : "(16*1024)",
-            "sotp-section-2-address"           : "(0x08000000+48*1024)",
-            "sotp-section-2-size"              : "(16*1024)",
-            "update-client.application-details": "(0x08000000+64*1024)",
-            "mbedtls-user-config-file": "\"mbedTLSConfig_mbedOS_SW_TRNG.h\"",
-            "pal-user-defined-config": "\"sotp_non_trng_config_MbedOS.h\""
+        "NUCLEO_F411RE": {            
+            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f411re-block_device-kvstore-v4.0.0.bin",
+            "target.header_offset"                       : "0x10000",
+            "target.app_offset"                          : "0x10400",
+            "target.macros_add"                          : ["DISABLE_ERROR_DESCRIPTION", "MBEDTLS_PSA_CRYPTO_C", "MBEDTLS_ENTROPY_NV_SEED"],
+            "target.components_add"                      : ["SD"],
+            "update-client.bootloader-details"           : "(0x08000000+30*1024)",
+            "update-client.application-details"          : "(0x08000000+64*1024)",
+            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS_SW_TRNG_PSA.h\"",
+            "storage.storage_type"                       : "FILESYSTEM",
+            "storage_filesystem.filesystem"              : "LITTLE",
+            "storage_filesystem.blockdevice"             : "SD",
+            "storage_filesystem.internal_base_address"   : "(0x08000000+32*1024)",
+            "storage_filesystem.rbp_internal_size"       :  "(32*1024)",
+            "storage_filesystem.external_base_address"   : "(0x0)",
+            "storage_filesystem.external_size"           : "(1024*1024*64)",
+            "pal-user-defined-config"                    : "\"pal_config_non_trng_MbedOS.h\"", 
+            "sd.SPI_MOSI"                                : "PC_3",
+            "sd.SPI_MISO"                                : "PC_2",
+            "sd.SPI_CLK"                                 : "PC_7",
+            "sd.SPI_CS"                                  : "PB_9",
+            "mbed-trace-max-level"                       : "TRACE_LEVEL_ERROR"
         }
     },
     "config": {
-        "main-stack-size": {
-            "value": 8192
+        "main-stack-size"          : {
+            "value"                : 8192
         },
-        "primary-partition-size": {
-            "help": "The primary partition size in bytes on the target device storage",
-            "macro_name": "PRIMARY_PARTITION_SIZE",
-            "value": null
-        },
-        "sotp-section-1-address": {
-            "help": "Flash sector address for SOTP sector 1",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_1_ADDRESS",
-            "value": null
-        },
-        "sotp-section-1-size": {
-            "help": "Flash sector size for SOTP sector 1",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_1_SIZE",
-            "value": null
-        },
-        "sotp-section-2-address": {
-            "help": "Flash sector address for SOTP sector 2",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_2_ADDRESS",
-            "value": null
-        },
-        "sotp-section-2-size": {
-            "help": "Flash sector size for SOTP sector 2",
-            "macro_name": "PAL_INTERNAL_FLASH_SECTION_2_SIZE",
-            "value": null
-        },
-        "mbedtls-user-config-file": {
-            "help": "Mbetls user configuration file",
-            "macro_name": "MBEDTLS_USER_CONFIG_FILE",
-            "value": null
+        "mbedtls-user-config-file" : {
+            "help"                 : "Mbetls user configuration file",
+            "macro_name"           : "MBEDTLS_USER_CONFIG_FILE",
+            "value"                : null
         },
         "pal-user-defined-config": {
-            "help": "PAL user configuration file",
-            "macro_name": "PAL_USER_DEFINED_CONFIGURATION",
-            "value": null
+            "help"                 : "PAL user configuration file",
+            "macro_name"           : "PAL_USER_DEFINED_CONFIGURATION",
+            "value"                : null
+        },
+        "mbed-trace-max-level": {
+            "help"                 : "Max trace level. Must be one of the following: [TRACE_LEVEL_DEBUG, TRACE_LEVEL_INFO, TRACE_LEVEL_WARN, TRACE_LEVEL_ERROR, TRACE_LEVEL_CMD]",
+            "macro_name"           : "MBED_TRACE_MAX_LEVEL",
+            "value"                : "TRACE_LEVEL_INFO"
         }
     }
 }

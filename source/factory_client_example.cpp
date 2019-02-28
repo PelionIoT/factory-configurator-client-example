@@ -55,6 +55,12 @@ static void factory_flow_task()
     uint8_t *response_message = NULL;
     size_t response_message_size = 0;
 
+#if defined(__SXOS__)
+    mcc_platform_do_wait(3000);
+#else
+    setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
+#endif
+
     mcc_platform_sw_build_info();
 
     // Initialize storage
@@ -70,7 +76,11 @@ static void factory_flow_task()
         return;
     }
 
-    setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
+    fcc_status = fcc_storage_delete();
+    if (fcc_status != FCC_STATUS_SUCCESS) {
+        tr_error("Failed to reset storage\n");
+        goto out1;
+    }
 
     // Create communication interface object
     ftcd_comm = fce_create_comm_interface();
@@ -87,13 +97,6 @@ static void factory_flow_task()
     }
 
     mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Factory flow begins...");
-
- 
-	fcc_status = fcc_storage_delete();
-	if (fcc_status != FCC_STATUS_SUCCESS) {
-		tr_error("Failed to reset storage\n");
-		goto out2;
-	}
 
     while (true) {
         factory_example_success = EXIT_FAILURE;
@@ -160,7 +163,12 @@ out1:
 /**
 * Example main
 */
+#if defined(__SXOS__)
+extern "C"
+int mbed_cloud_application_entrypoint(void)
+#else
 int main(int argc, char * argv[])
+#endif
 {
     bool success = false;
 
@@ -178,7 +186,6 @@ int main(int argc, char * argv[])
 
     success = (mcc_platform_init() == 0);
     if (success) {
-        // setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
         success = mcc_platform_run_program(&factory_flow_task);
     }
 
