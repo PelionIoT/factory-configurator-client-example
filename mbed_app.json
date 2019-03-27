@@ -93,7 +93,8 @@
             "sd.SPI_MISO"                                : "PC_2",
             "sd.SPI_CLK"                                 : "PC_7",
             "sd.SPI_CS"                                  : "PB_9",
-            "mbed-trace-max-level"                       : "TRACE_LEVEL_ERROR"
+            "mbed-trace-max-level"                       : "TRACE_LEVEL_ERROR",
+            "target.extra_labels_add"                   : ["PSA"]
         }
     },
     "config": {
