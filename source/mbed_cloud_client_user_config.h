@@ -27,7 +27,6 @@
 #endif
 #define MBED_CLOUD_CLIENT_LIFETIME                                     0
 #define SN_COAP_MAX_BLOCKWISE_PAYLOAD_SIZE                             128
-#define MBED_CLOUD_CLIENT_UPDATE_BUFFER                                1024
 #define MBED_CLOUD_CLIENT_TRANSPORT_MODE_TCP
 
 #endif /* MBED_CLOUD_CLIENT_USER_CONFIG_H */
