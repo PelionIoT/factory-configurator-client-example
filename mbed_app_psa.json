@@ -66,8 +66,8 @@
             "storage.storage_type"                       : "FILESYSTEM",
             "storage_filesystem.filesystem"              : "LITTLE",
             "storage_filesystem.blockdevice"             : "SD",
-            "storage_filesystem.internal_base_address"   : "(0x1004a400+0xB8000-0xa400-(1024*32))",
-            "storage_filesystem.rbp_internal_size"       : "(31*1024)",
+            "storage_filesystem.internal_base_address"   : "(0x10040000+0xB8000)",
+            "storage_filesystem.rbp_internal_size"       : "(23*1024)",
             "storage_filesystem.external_base_address"   : "0x0",
             "storage_filesystem.external_size"           : "(1024*1024*64)",
             "sd.SPI_MOSI"                                : "P12_0",
@@ -76,7 +76,7 @@
             "sd.SPI_CS"                                  : "P12_3",
             "target.app_offset"                          : "0x0A400",
             "target.header_offset"                       : "0x0A000",
-            "target.bootloader_img"                      : "tools/mbed-bootloader-cy8ckit_062_wifi_bt_psa-block_device-kvstore-v4.0.1-4-g65fd.hex"
+            "target.bootloader_img"                      : "tools/mbed-bootloader-cy8ckit_062_wifi_bt_psa-block_device-kvstore-v4.0.1-4-g19c1.hex"
       }
     },
     "config": {

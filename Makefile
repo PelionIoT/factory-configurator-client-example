@@ -28,6 +28,7 @@ LOCAL_ADD_INCLUDE +=     \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/factory-configurator-client/ftcd-comm-serial/ftcd-comm-serial \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/mbed-trace \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/nanostack-libservice/mbed-client-libservice \
+                         ${MBED_CLOUD_SERVICE}/mbed-cloud-client/mbed-client-pal/Source \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/mbed-client-pal/Source/PAL-Impl/Services-API \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/mbed-client-pal/Configs/pal_config \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/mbed-client-pal/Configs/pal_config/SXOS \
