@@ -1,22 +1,6 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.5)
 
-# pal services
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-client-pal/Source/PAL-Impl/Services-API)
-
-# mbed-trace and services
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-trace)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/mbed-trace/mbed-trace)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/nanostack-libservice/mbed-client-libservice)
-
-# factory-configurator-client
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/factory-configurator-client/factory-configurator-client)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/ftcd-comm-base/ftcd-comm-base)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/ftcd-comm-socket/ftcd-comm-socket)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/fcc-bundle-handler/fcc-bundle-handler)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/key-config-manager/key-config-manager)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/mbed-trace-helper/mbed-trace-helper)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/fcc-output-info-handler/fcc-output-info-handler)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client/factory-configurator-client/utils/utils)
+project(factory-configurator-client-example)
 
 # mbed-cloud-client-platform-common
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client-platform-common/include)
