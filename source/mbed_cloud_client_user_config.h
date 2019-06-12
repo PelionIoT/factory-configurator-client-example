@@ -21,12 +21,6 @@
 
 // Defines to pass MbedCloudClientConfigCheck.h checks (the values are meaningless)
 
-#define MBED_CLOUD_CLIENT_ENDPOINT_TYPE                                "default"
-#if defined(__linux__) || defined(TARGET_LIKE_MBED)
-#define MBED_CLOUD_CLIENT_SUPPORT_UPDATE
-#endif
-#define MBED_CLOUD_CLIENT_LIFETIME                                     0
 #define SN_COAP_MAX_BLOCKWISE_PAYLOAD_SIZE                             512
-#define MBED_CLOUD_CLIENT_TRANSPORT_MODE_TCP
 
 #endif /* MBED_CLOUD_CLIENT_USER_CONFIG_H */

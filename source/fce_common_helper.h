@@ -21,8 +21,11 @@
 * The communication socket port
 * If FTD_SERVER_TCP_PORT defined as 0, random port will be generated.
 */
-#define FTD_SERVER_TCP_PORT 7777
-
+#ifdef __LINUX__
+    #define FTD_SERVER_TCP_PORT 0
+#else
+    #define FTD_SERVER_TCP_PORT 7777
+#endif
 
 #ifdef __cplusplus
 extern "C" {
