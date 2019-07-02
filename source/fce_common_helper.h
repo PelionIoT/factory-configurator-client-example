@@ -17,6 +17,13 @@
 #include <stdlib.h>
 #include "ftcd_comm_base.h"
 
+
+// check user target interface input
+#if !defined(FCE_ETHERNET_INTERFACE) && !defined(FCE_SERIAL_INTERFACE)
+#error Neither of FCE_SERIAL_INTERFACE or FCE_ETHERNET_INTERFACE is defined, please select the interface type you would like to use according to your target platform and compile again.
+#endif
+
+
 /**
 * The communication socket port
 * If FTD_SERVER_TCP_PORT defined as 0, random port will be generated.

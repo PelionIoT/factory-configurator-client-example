@@ -36,7 +36,7 @@ FtcdCommBase *fce_create_comm_interface(void)
     // Check if "ETHERNET_LINUX_IFACE_NAME" exists in the system environment, if yes - take it
     // otherwise use the one selected during the build process, please check the CMakeLists.txt in the example's root tree directory.
     env_socket_iface = std::getenv("ETHERNET_LINUX_IFACE_NAME");
-    if ((env_socket_iface != NULL) && (pv_str_n_len(env_socket_iface, 1)) > 0) {
+    if ((env_socket_iface != NULL) && (pv_str_n_len(env_socket_iface, 1) > 0)) {
         SA_PV_LOG_INFO("env_socket_iface=%s", env_socket_iface);
         g_socket_iface = env_socket_iface;
     }

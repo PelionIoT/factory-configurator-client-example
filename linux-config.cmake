@@ -11,4 +11,5 @@ add_definitions(
 	-DPAL_USER_DEFINED_CONFIGURATION="\\"source/pal_config_linux.h"\\"
 	-DMBED_CLIENT_USER_CONFIG_FILE="\\"source/mbed_cloud_client_user_config.h"\\"
 	-DMBED_CLOUD_CLIENT_USER_CONFIG_FILE="\\"source/mbed_cloud_client_user_config.h"\\"
+    -DFCE_ETHERNET_INTERFACE
 )
