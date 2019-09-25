@@ -1,5 +1,15 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.0.0 
+
+* [Mbed OS] Updated to Mbed OS 5.14.0.
+* [Mbed OS] We now officially support Platform Security Architecture (PSA) on V7 single boards, including K64F, K66F, and NUCLEO_F411RE.
+* [Mbed OS] Added support for the Discovery L475VG IOT01A target board.
+* [Mbed OS] Removed `CY8CKIT_062_WIFI_BT_PSA`, which is no longer supported starting from Mbed OS 5.13.1.  
+* [Linux] Updated to Mbed TLS 2.19.1.
+* Added support for UNISOC SXOS SDK v8p2.1 for the UIS8908A NB-IoT board.
+ 
+
 ## Release 3.4.0 (28.08.2019)
 
 * [Linux] Updated to Mbed TLS 2.18.1.
