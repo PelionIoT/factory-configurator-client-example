@@ -2,6 +2,7 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 set(SA_PV_OS_NAME "linux")
+OPTION(LINK_WITH_ESFS_SOTP "Explicitly link esfs and sotp library" ON)
 
 SET(PAL_TLS_BSP_DIR ${NEW_CMAKE_SOURCE_DIR}/mbed-cloud-client/mbed-client-pal/Configs/mbedTLS)
 

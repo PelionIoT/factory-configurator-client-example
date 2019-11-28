@@ -54,6 +54,7 @@ static void factory_flow_task()
     uint32_t input_message_size = 0;
     uint8_t *response_message = NULL;
     size_t response_message_size = 0;
+    bool is_storage_deleted = false;
 
 #if defined(__SXOS__)
     mcc_platform_do_wait(3000);
@@ -74,12 +75,6 @@ static void factory_flow_task()
     if (fcc_status != FCC_STATUS_SUCCESS) {
         tr_error("Failed initializing factory configurator client\n");
         return;
-    }
-
-    fcc_status = fcc_storage_delete();
-    if (fcc_status != FCC_STATUS_SUCCESS) {
-        tr_error("Failed to reset storage\n");
-        goto out1;
     }
 
     // Create communication interface object
@@ -103,6 +98,20 @@ static void factory_flow_task()
         // wait for message from communication layer
         ftcd_comm_status = ftcd_comm->wait_for_message(&input_message, &input_message_size);
         if (ftcd_comm_status == FTCD_COMM_STATUS_SUCCESS) {
+
+            // If this is the first message and the storage wasn't deleted yet, delete the storage.
+            // The call to this function should be after wait_for_message success, to prevent a case when the storage is deleted after resetting the board.
+            // This way we make sure that the storage is deleted only when factory flow is actually running.
+            if (!is_storage_deleted) {
+                fcc_status = fcc_storage_delete();
+                if (fcc_status != FCC_STATUS_SUCCESS) {
+                    tr_error("Failed to reset storage\n");
+                    goto out2;
+                }
+                is_storage_deleted = true;
+                mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Storage is erased");
+            }           
+
             // process request and get back response
             fcc_status = fcc_bundle_handler(input_message, input_message_size, &response_message, &response_message_size);
             if ((fcc_status == FCC_STATUS_BUNDLE_RESPONSE_ERROR) || (response_message == NULL) || (response_message_size == 0)) {

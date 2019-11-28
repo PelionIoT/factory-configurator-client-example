@@ -15,7 +15,7 @@
         },
         "K64F": {
             "lwip.tcpip-thread-stacksize"                : 2400,
-            "target.bootloader_img"                      : "tools/mbed-bootloader-k64f-block_device-kvstore-v4.0.0.bin",
+            "target.bootloader_img"                      : "tools/mbed-bootloader-k64f-block_device-kvstore-v4.1.0.bin",
             "target.header_offset"                       : "0xa000",
             "target.app_offset"                          : "0xa400",
             "bootloader-size"                            : "(32*1024)",
@@ -31,7 +31,7 @@
         },
         "K66F": {
             "lwip.tcpip-thread-stacksize"                : 2400,
-            "target.bootloader_img"                      : "tools/mbed-bootloader-k66f-internal_flash-no_rot-v4.0.0.bin",
+            "target.bootloader_img"                      : "tools/mbed-bootloader-k66f-internal_flash-no_rot-v4.1.0.bin",
             "target.header_offset"                       : "0x8000",
             "target.app_offset"                          : "0x8400",
             "storage.storage_type"                       : "TDB_INTERNAL",
@@ -42,7 +42,7 @@
         },
         "NUCLEO_F429ZI": {
             "lwip.tcpip-thread-stacksize"                : 2400,
-            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f429zi-internal_flash-no_rot-v4.0.0.bin",
+            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f429zi-internal_flash-no_rot-v4.1.0.bin",
             "target.header_offset"                       : "0x8000",
             "target.app_offset"                          : "0x8400",
             "update-client.bootloader-details"           : "0x080078CC",
@@ -54,7 +54,7 @@
         },
         "UBLOX_EVK_ODIN_W2": {
             "lwip.tcpip-thread-stacksize"                : 2400,
-            "target.bootloader_img"                      : "tools/mbed-bootloader-ublox_evk_odin_w2-block_device-kvstore-v4.0.0.bin",
+            "target.bootloader_img"                      : "tools/mbed-bootloader-ublox_evk_odin_w2-block_device-kvstore-v4.1.0.bin",
             "target.header_offset"                       : "0x10000",
             "target.app_offset"                          : "0x10400",
             "bootloader-size"                            : "(32*1024)",
@@ -69,7 +69,7 @@
             "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         },
         "DISCO_L475VG_IOT01A": {
-            "target.bootloader_img"                      : "tools/mbed-bootloader-disco_l475vg_iot01a-internal_qspif-kvstore.bin",
+            "target.bootloader_img"                      : "tools/mbed-bootloader-disco_l475vg_iot01a-internal_qspif-kvstore-v4.1.0.bin",
             "target.header_offset"                       : "0x11000",
             "target.app_offset"                          : "0x11400",
             "target.components_add"                      : ["QSPIF"],
@@ -81,10 +81,10 @@
             "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         },
         "NUCLEO_F411RE": {
-            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f411re-block_device-kvstore-v4.0.0.bin",
+            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f411re-block_device-kvstore-v4.1.0.bin",
             "target.header_offset"                       : "0x10000",
             "target.app_offset"                          : "0x10400",
-            "target.macros_add"                          : ["DISABLE_ERROR_DESCRIPTION", "MBEDTLS_PSA_CRYPTO_C", "MBEDTLS_ENTROPY_NV_SEED"],
+            "target.macros_add"                          : ["DISABLE_ERROR_DESCRIPTION", "MBEDTLS_ENTROPY_NV_SEED"],
             "target.components_add"                      : ["SD"],
             "bootloader-size"                            : "(32*1024)",
             "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS_SW_TRNG_PSA.h\"",
