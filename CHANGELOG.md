@@ -1,6 +1,11 @@
 # Changelog for Factory Configurator Client example application
 
-## Release 4.0.0 
+## Release 4.1.0 (28.11.2019)
+
+* Bugfix: The storage is deleted only after the first message is received from the Factory Tool and not upon initialization.
+* [Mbed OS] Updated to Mbed OS 5.14.2.
+
+## Release 4.0.0 (25.09.2019)
 
 * [Mbed OS] Updated to Mbed OS 5.14.0.
 * [Mbed OS] We now officially support Platform Security Architecture (PSA) on V7 single boards, including K64F, K66F, and NUCLEO_F411RE.
