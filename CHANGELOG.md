@@ -1,6 +1,11 @@
 # Changelog for Factory Configurator Client example application
 
-## Release 4.1.0 (28.11.2019)
+## Release 4.2.0 (18.12.2019)
+
+* Added support for Nucleo F303RE 
+* [Mbed OS] Updated to Mbed OS 5.15.0.
+
+## Release 4.1.0 (28.11.2019) 
 
 * Bugfix: The storage is deleted only after the first message is received from the Factory Tool and not upon initialization.
 * [Mbed OS] Updated to Mbed OS 5.14.2.

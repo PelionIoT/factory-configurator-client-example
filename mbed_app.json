@@ -102,6 +102,30 @@
             "sd.SPI_CS"                                  : "PB_9",
             "mbed-trace-max-level"                       : "TRACE_LEVEL_ERROR",
             "target.extra_labels_add"                    : ["PSA"]
+        },
+        "NUCLEO_F303RE": {
+            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS_SW_TRNG_PSA.h\"",
+            "pal-user-defined-config"                    : "\"pal_config_non_trng_MbedOS.h\"",
+            "target.components_add"                      : ["SPIF"],
+            "target.extra_labels_add"                    : ["PSA"],
+            "target.macros_add"                          : ["MBEDTLS_PSA_CRYPTO_C", "MBEDTLS_ENTROPY_NV_SEED",
+                                                           "MBEDTLS_MEMORY_BUFFER_ALLOC_C", "MBEDTLS_PLATFORM_MEMORY",
+                                                           "DISABLE_ERROR_DESCRIPTION"],
+            "target.macros_remove"                       : ["MBEDTLS_CONFIG_HW_SUPPORT"],
+            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f303re-internal_kvstore-spif-v4_1_1.bin",
+            "target.header_offset"                       : "0x11800",
+            "target.app_offset"                          : "0x11C00",
+            "bootloader-size"                            : "(38 * 1024)",
+            "storage.storage_type"                       : "TDB_INTERNAL",
+            "storage_tdb_internal.internal_base_address" : "(MBED_ROM_START + MBED_BOOTLOADER_SIZE)",
+            "storage_tdb_internal.internal_size"         : "(32 * 1024)",
+            "spif-driver.SPI_MOSI"                       : "PC_12",
+            "spif-driver.SPI_MISO"                       : "PC_11",
+            "spif-driver.SPI_CLK"                        : "PC_10",
+            "spif-driver.SPI_CS"                         : "PA_15",
+            "mbed-trace-max-level"                       : "TRACE_LEVEL_ERROR",
+            "drivers.uart-serial-txbuf-size"             : 256,
+            "drivers.uart-serial-rxbuf-size"             : 1024
         }
     },
     "config": {
