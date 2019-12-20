@@ -1,5 +1,9 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.2.1 (20.12.2019)
+
+No changes.
+
 ## Release 4.2.0 (18.12.2019)
 
 * Added support for Nucleo F303RE 
