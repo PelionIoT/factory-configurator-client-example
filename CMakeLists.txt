@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.5)
 
 project(factory-configurator-client-example)
 
+# This is needed for compiling and linking SW.
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/source/platform")
+
 # mbed-cloud-client-platform-common
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mbed-cloud-client-platform-common/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source/platform/include)
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
 	add_definitions(-DMBED_TRACE_MAX_LEVEL=TRACE_LEVEL_INFO -DPAL_NUMBER_OF_PARTITIONS=1 -DPAL_PRIMARY_PARTITION_PRIVATE=0 -DPAL_SECONDARY_PARTITION_PRIVATE=0)
