@@ -1,5 +1,10 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.3.0 (06.02.2020)
+
+* Added support for Atmel secure element (ATECC608A) with K64F target board (`mbed_app_atmel_conf.json`). Atmel SE holds pre-provisioned bootstrap key and certificate that Device Management Client uses for secure connection with Device Management.
+* Platform-application-specific code moved from `mbed-cloud-client-common-platform` folder to `source\platform` folder.
+
 ## Release 4.2.1 (20.12.2019)
 
 No changes.

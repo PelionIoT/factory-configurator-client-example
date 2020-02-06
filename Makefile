@@ -16,7 +16,7 @@ LOCAL_API_DEPENDS := \
 
 LOCAL_ADD_INCLUDE +=     \
                          ${MBED_CLOUD_SERVICE}/source/include \
-                         ${MBED_CLOUD_SERVICE}/mbed-cloud-client-platform-common/include \
+                         ${MBED_CLOUD_SERVICE}/source/platform/include \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/factory-configurator-client/factory-configurator-client/factory-configurator-client \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/factory-configurator-client/fcc-bundle-handler/fcc-bundle-handler \
                          ${MBED_CLOUD_SERVICE}/mbed-cloud-client/factory-configurator-client/fcc-output-info-handler/fcc-output-info-handler \
@@ -70,11 +70,11 @@ C++_SRC += ${wildcard source/fce_mbed_os_serial_helper.cpp}
 C++_SRC += ${wildcard mbed-cloud-client/factory-configurator-client/ftcd-comm-base/source/*.cpp}
 C++_SRC += ${wildcard mbed-cloud-client/factory-configurator-client/ftcd-comm-serial/source/*.cpp}
 
-C_SRC += ${wildcard mbed-cloud-client-platform-common/*.c}
-C++_SRC += ${wildcard mbed-cloud-client-platform-common/*.cpp}
+C_SRC += ${wildcard source/platform/*.c}
+C++_SRC += ${wildcard source/platform/*.cpp}
 
-C_SRC += ${wildcard mbed-cloud-client-platform-common/SXOS/*.c}
-C++_SRC += ${wildcard mbed-cloud-client-platform-common/SXOS/*.cpp}
+C_SRC += ${wildcard source/platform/SXOS/*.c}
+C++_SRC += ${wildcard source/platform/SXOS/*.cpp}
 
 
 ## ------------------------------------- ##

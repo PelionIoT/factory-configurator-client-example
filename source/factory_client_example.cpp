@@ -33,8 +33,8 @@
 #include "fcc_malloc.h"
 #include "fcc_stats.h"
 #include "fcc_bundle_handler.h"
-#ifdef MBED_CONF_APP_SECURE_ELEMENT_ATCA_SUPPORT
-#include "mcc_atca_credentials_init.h"
+#ifdef MBED_CONF_MBED_CLOUD_CLIENT_SECURE_ELEMENT_SUPPORT
+#include "mcc_se_init.h"
 #endif 
 #define TRACE_GROUP     "fce"  // Maximum 4 characters
 
@@ -113,11 +113,11 @@ static void factory_flow_task()
                 is_storage_deleted = true;
                 mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Storage is erased");
 
-#ifdef MBED_CONF_APP_SECURE_ELEMENT_ATCA_SUPPORT
-                //Initialize atmel credentials
-                int res = mcc_atca_credentials_init();
+#ifdef MBED_CONF_MBED_CLOUD_CLIENT_SECURE_ELEMENT_SUPPORT
+                //Initialize secure element
+                int res = mcc_se_init();
                 if (res != 0) {
-                    tr_error("Failed to initialize atca credentials\n");
+                    tr_error("Failed to initialize secure element\n");
                     goto out1;
                 }
 #endif
