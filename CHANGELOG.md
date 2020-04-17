@@ -1,5 +1,9 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.4.0 (17.04.2020)
+
+* Updated to Mbed OS 5.15.1.
+
 ## Release 4.3.0 (06.02.2020)
 
 * Added support for Atmel secure element (ATECC608A) with K64F target board (`mbed_app_atmel_conf.json`). Atmel SE holds pre-provisioned bootstrap key and certificate that Device Management Client uses for secure connection with Device Management.
