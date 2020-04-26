@@ -190,8 +190,11 @@ int mbed_cloud_application_entrypoint(void)
 int main(int argc, char * argv[])
 #endif
 {
+    (void)argc;
+    (void)argv;
+ 
     bool success = false;
-
+    
     // careful, mbed-trace initialization may happen at this point if and only if we 
     // do NOT use mutex by passing "true" at the second param for this functions.
     // In case mutex is used, this function MUST be moved *after* pal_init()
