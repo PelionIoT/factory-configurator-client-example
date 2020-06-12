@@ -20,6 +20,7 @@
 // INCLUDES
 ///////////
 #include "mcc_common_setup.h"
+#include "pal.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -32,8 +33,10 @@
 
 #if 0
 #include "fsl_debug_console.h"
+#undef DEBUG_PRINT
 #define DEBUG_PRINT(...) PRINTF(__VA_ARGS__)
 #else
+#undef DEBUG_PRINT
 #define DEBUG_PRINT(...)
 #endif
 
@@ -123,4 +126,12 @@ void mcc_platform_do_wait(int timeout_ms)
 
 void mcc_platform_sw_build_info(void) {
     printf("Application ready. Build at: " __DATE__ " " __TIME__ "\r\n");
+}
+
+void mcc_platform_reboot(void) {
+    pal_osReboot();
+}
+
+int mcc_platform_rot_generate(void) {
+    return 0;
 }

@@ -1,5 +1,12 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.5.0 (12.06.2020)
+
+**Breaking changes** (due to the SE ATECC608A driver update, the application is not compatible with previous driver releases):
+
+* Updated SE `ATECC608A` driver `COMPONENT_ATECC608A.lib`.
+* Updated mbed-cloud-client-platform-common `platform.lib` to include adaptation for the new SE ATECC608A driver.
+
 ## Release 4.4.0 (17.04.2020)
 
 * Updated to Mbed OS 5.15.1.
