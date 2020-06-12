@@ -186,10 +186,14 @@ out1:
 #if defined(__SXOS__)
 extern "C"
 int mbed_cloud_application_entrypoint(void)
+{
 #else
 int main(int argc, char * argv[])
-#endif
 {
+    (void) argc;
+    (void) argv;
+#endif
+
     bool success = false;
 
     // careful, mbed-trace initialization may happen at this point if and only if we 
