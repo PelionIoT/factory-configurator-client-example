@@ -1,13 +1,18 @@
 # Changelog for Factory Configurator Client example application
 
-## Release 4.5.0 (12.06.2020)
+## Release 4.6.0 (24.08.2020)
 
-**Breaking changes** (due to the SE ATECC608A driver update, the application is not compatible with previous driver releases):
+* pal-platform: Updated Mbed TLS to 2.22.0 in `pal-platform`.
+* Added support for PARSEC. To compile FCCE with PARSEC, set the `PARSEC_TPM_SE_SUPPORT` CMake flag to `ON` and use the `linux-psa-config.cmake` configuration file.
+  In this configuration, the device bootstrap private key is generated on the Trusted Platform Module (TPM) during factory provisioning.
 
-* Updated SE `ATECC608A` driver `COMPONENT_ATECC608A.lib`.
-* Updated mbed-cloud-client-platform-common `platform.lib` to include adaptation for the new SE ATECC608A driver.
+## Release 4.5.0 (04.06.2020)
 
-## Release 4.4.0 (17.04.2020)
+* **Breaking changes** (Due to update of SE ATECC608A driver , the application is not compatible with previous releases of SE ATECC608A driver).
+  * Updated SE ATECC608A driver COMPONENT_ATECC608A.lib.
+  * Updated mbed-cloud-client-platform-common platform.lib - includes adaptation for new SE ATECC608A driver.
+
+## Release 4.4.0 (08.04.2020)
 
 * Updated to Mbed OS 5.15.1.
 

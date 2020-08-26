@@ -7,6 +7,9 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/source/platform")
 
 # mbed-cloud-client-platform-common
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source/platform/include)
+if(PARSEC_TPM_SE_SUPPORT)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source/platform/secure_element/se_configs)
+endif()
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
 	add_definitions(-DMBED_TRACE_MAX_LEVEL=TRACE_LEVEL_INFO -DPAL_NUMBER_OF_PARTITIONS=1 -DPAL_PRIMARY_PARTITION_PRIVATE=0 -DPAL_SECONDARY_PARTITION_PRIVATE=0)
@@ -15,12 +18,23 @@ else()
 endif()
 
 # example source files
+if(PARSEC_TPM_SE_SUPPORT)
+SET(
+	factory-configurator-client-example
+	${CMAKE_CURRENT_SOURCE_DIR}/source/factory_client_example.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_${SA_PV_OS_NAME}_socket_helper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_common_helper.h
+	${CMAKE_CURRENT_SOURCE_DIR}/source/platform/secure_element/mcc_se_init.c
+)
+else()
 SET(
 	factory-configurator-client-example
 	${CMAKE_CURRENT_SOURCE_DIR}/source/factory_client_example.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_${SA_PV_OS_NAME}_socket_helper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_common_helper.h
 )
+endif()
+
 
 message ("*********************************************************************")
 message ("factory-configurator-client-example = [[${factory-configurator-client-example}]]")
