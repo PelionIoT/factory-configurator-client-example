@@ -1,32 +1,33 @@
 {
     "macros": [
         "MBED_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\"",
-        "MBED_CLOUD_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\"",
-        "MBEDTLS_USE_PSA_CRYPTO"
+        "MBED_CLOUD_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\""
     ],
     "target_overrides": {
         "*": {
             "platform.stdio-buffered-serial"             : true,
             "platform.stdio-baud-rate"                   : 115200,
             "platform.stdio-convert-newlines"            : true,
-            "target.features_add"                        : [ "BOOTLOADER", "STORAGE" ],
+            "target.features_add"                        : [ "EXPERIMENTAL_API", "BOOTLOADER", "STORAGE" ],
+            "target.c_lib"                               : "std",
             "mbed-trace.enable"                          : 1,
             "mbed-cloud-client.external-sst-support"     : 1,
             "target.OUTPUT_EXT"                          : "hex",
-            "mbed-cloud-client.psa-support": 1
+            "mbed-cloud-client.psa-support"              : 1
         },
         "K64F": {
             "lwip.tcpip-thread-stacksize"                : 2400,
             "target.bootloader_img"                      : "tools/mbed-bootloader-k64f-block_device-kvstore-v4.1.0.bin",
             "target.header_offset"                       : "0xa000",
             "target.app_offset"                          : "0xa400",
-            "storage.storage_type"                       : "FILESYSTEM",
-            "storage_filesystem.filesystem"              : "LITTLE",
-            "storage_filesystem.blockdevice"             : "SD",
-            "storage_filesystem.internal_base_address"   : "(32*1024)",
+            "target.components_add"                      : ["SD"],
+            "storage_filesystem.internal_base_address"   : "(MBED_ROM_START + MBED_BOOTLOADER_SIZE)",
             "storage_filesystem.rbp_internal_size"       : "(8*1024)",
             "storage_filesystem.external_base_address"   : "0x0",
             "storage_filesystem.external_size"           : "(1024*1024*64)",
+            "storage.storage_type"                       : "FILESYSTEM",
+            "storage_filesystem.filesystem"              : "LITTLE",
+            "storage_filesystem.blockdevice"             : "SD",
             "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
             "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         },
@@ -40,49 +41,7 @@
             "storage_tdb_internal.internal_size"         : "(96*1024)",
             "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
             "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
-        },
-        "LPC55S69_NS": {
-            "target.components_add"                      : [ "SD", "FLASHIAP" ],
-            "target.extra_labels_add"                    : [ "PSA" ],
-            "target.bootloader_img"                      : "tools/mbed-bootloader-lpc55s69_ns-block_device-kvstore-v4.0.1-4-g65fd.hex",
-            "storage.storage_type"                       : "FILESYSTEM",
-            "storage_filesystem.filesystem"              : "LITTLE",
-            "storage_filesystem.blockdevice"             : "SD",
-            "sd.SPI_CS"                                  : "D10",
-            "sd.SPI_MOSI"                                : "D11",
-            "sd.SPI_MISO"                                : "D12",
-            "sd.SPI_CLK"                                 : "D13",
-            "storage_filesystem.internal_base_address"   : "0x94000",
-            "storage_filesystem.rbp_internal_size"       : "(15*1024)",
-            "storage_filesystem.external_base_address"   : "0x0",
-            "storage_filesystem.external_size"           : "(1024*1024*64)",
-            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
-            "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
-        },
-        "NUCLEO_F411RE": {            
-            "target.bootloader_img"                      : "tools/mbed-bootloader-nucleo_f411re-block_device-kvstore-v4.1.0.bin",
-            "target.header_offset"                       : "0x10000",
-            "target.app_offset"                          : "0x10400",
-            "target.macros_add"                          : ["DISABLE_ERROR_DESCRIPTION", "MBEDTLS_ENTROPY_NV_SEED"],
-            "target.components_add"                      : ["SD"],
-            "update-client.bootloader-details"           : "(0x08000000+30*1024)",
-            "update-client.application-details"          : "(0x08000000+64*1024)",
-            "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS_SW_TRNG_PSA.h\"",
-            "storage.storage_type"                       : "FILESYSTEM",
-            "storage_filesystem.filesystem"              : "LITTLE",
-            "storage_filesystem.blockdevice"             : "SD",
-            "storage_filesystem.internal_base_address"   : "(0x08000000+32*1024)",
-            "storage_filesystem.rbp_internal_size"       :  "(32*1024)",
-            "storage_filesystem.external_base_address"   : "(0x0)",
-            "storage_filesystem.external_size"           : "(1024*1024*64)",
-            "pal-user-defined-config"                    : "\"pal_config_non_trng_MbedOS.h\"", 
-            "sd.SPI_MOSI"                                : "PC_3",
-            "sd.SPI_MISO"                                : "PC_2",
-            "sd.SPI_CLK"                                 : "PC_7",
-            "sd.SPI_CS"                                  : "PB_9",
-            "mbed-trace-max-level"                       : "TRACE_LEVEL_ERROR",
-            "target.extra_labels_add"                   : ["PSA"]
-        }
+        }       
     },
     "config": {
         "main-stack-size"          : {
@@ -102,6 +61,11 @@
             "help"                 : "Max trace level. Must be one of the following: [TRACE_LEVEL_DEBUG, TRACE_LEVEL_INFO, TRACE_LEVEL_WARN, TRACE_LEVEL_ERROR, TRACE_LEVEL_CMD]",
             "macro_name"           : "MBED_TRACE_MAX_LEVEL",
             "value"                : "TRACE_LEVEL_INFO"
+        },
+        "bootloader-size": {
+            "help"      : "Helper macro to enable calculation of rom regions. target.header_offset and target.app_offset still needs to be calculated manually, though.",
+            "value"     : "(32*1024)",
+            "macro_name": "MBED_BOOTLOADER_SIZE"
         }
     }
 }

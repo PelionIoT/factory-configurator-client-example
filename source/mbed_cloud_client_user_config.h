@@ -16,11 +16,13 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------
 
+
 #ifndef MBED_CLOUD_CLIENT_USER_CONFIG_H
 #define MBED_CLOUD_CLIENT_USER_CONFIG_H
 
 // Defines to pass MbedCloudClientConfigCheck.h checks (the values are meaningless)
 
 #define SN_COAP_MAX_BLOCKWISE_PAYLOAD_SIZE                             512
+
 
 #endif /* MBED_CLOUD_CLIENT_USER_CONFIG_H */

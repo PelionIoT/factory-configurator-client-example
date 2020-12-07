@@ -65,6 +65,7 @@ USE_DIFFERENT_SOURCE_LAYOUT := yes
 USE_DIFFERENT_SOURCE_LAYOUT_ARM := yes
 
 C++_SRC += ${wildcard source/factory_client_example.cpp}
+C++_SRC += ${wildcard source/factory_client_example_utils.cpp}
 C++_SRC += ${wildcard source/fce_mbed_os_serial_helper.cpp}
 
 C++_SRC += ${wildcard mbed-cloud-client/factory-configurator-client/ftcd-comm-base/source/*.cpp}

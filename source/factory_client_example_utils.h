@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// Copyright 2017-2019 ARM Ltd.
+// Copyright 2019-2020 ARM Ltd.
 //  
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,16 +13,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // ----------------------------------------------------------------------------
-#ifndef PAL_CONFIG_FREERTOS
-#define PAL_CONFIG_FREERTOS
+ #ifndef FACTORY_CLIENT_EXAMPLE_UTILS_H
+ #define FACTORY_CLIENT_EXAMPLE_UTILS_H
 
-#define PAL_USE_HW_ROT 1
-#define PAL_USE_HW_RTC 0
-#define PAL_USE_HW_TRNG 1
-#define PAL_SIMULATOR_FLASH_OVER_FILE_SYSTEM 0
-#define PAL_USE_INTERNAL_FLASH 1
-#define PAL_USE_SECURE_TIME 1
+#include <stdio.h>
+#include <stdlib.h>
+#include <inttypes.h>
 
-#include "FreeRTOS_default.h"
+#ifndef FCC_NANOCLIENT_ENABLED
+#include "mcc_common_setup.h"
+#include "mbed-trace-helper.h"
+#endif
+#include "factory_configurator_client.h"
+#include "mbed-trace/mbed_trace.h"
 
-#endif //PAL_CONFIG_FREERTOS
+bool fcc_mbed_trace_initialization( void );
+
+bool fcc_platform_initialization( void );
+
+bool fcc_run_program( void (*func)(void));
+
+void fcc_platform_sw_build_info( void );
+
+bool fcc_platform_storage_init( void );
+
+void fcc_mbed_trace_free( void );
+
+#endif// FACTORY_CLIENT_EXAMPLE_UTILS_H
