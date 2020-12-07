@@ -1,5 +1,20 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.7.0 (07.12.2020)
+
+* Updated to Mbed OS 6.5.0.
+* Added the `MIMXRT1050_EVK` target.
+* `NUCLEO_F411RE` targets now use the Mbed TLS non-volatile seed mechanism instead of `mbedtls_psa_inject_entropy`. This reduces the ROM size of these targets by 4KiB.
+  * All targets use standard C libraries instead of the small C libraries. This prevents potential issues with certain drivers that may have dependencies on `c_lib` implementation. Future releases will further optimize the configurations.
+  * `minimal-printf` is enabled by default in Mbed OS 6. This also means that `floating-point` support is disabled by default. For information about changing these configurations, see `minimal-printf` in the Mbed OS documentation.
+* Explicitly defined the minimum programming size (`qspif.QSPI_MIN_PROG_SIZE`) for `DISCO_L475VG_IOT01A` to be `1`. In Mbed OS, the default QSPIF value was changed to 256, which breaks backward compatibility with existing bootloaders (see https://github.com/ARMmbed/mbed-os/issues/13795).
+* Fixed bugs that caused firmware updates on `DISCO_L475VG_IOT01A` to fail after the factory provisioning flow.
+* Removed support for targets that Mbed OS 6 no longer supports:
+    * LPC55S69.
+    * Ublox EVK Odin W2.
+    * Nucleo F411RE as a Platform Security Architecture (PSA) target.    
+    * Nucleo F303RE. Nucleo F411RE is the reference for non-TRNG usage with Device Management Client.
+
 ## Release 4.6.0 (24.08.2020)
 
 * pal-platform: Updated Mbed TLS to 2.22.0 in `pal-platform`.
@@ -27,10 +42,10 @@ No changes.
 
 ## Release 4.2.0 (18.12.2019)
 
-* Added support for Nucleo F303RE 
+* Added support for Nucleo F303RE
 * [Mbed OS] Updated to Mbed OS 5.15.0.
 
-## Release 4.1.0 (28.11.2019) 
+## Release 4.1.0 (28.11.2019)
 
 * Bugfix: The storage is deleted only after the first message is received from the Factory Tool and not upon initialization.
 * [Mbed OS] Updated to Mbed OS 5.14.2.
@@ -43,7 +58,7 @@ No changes.
 * [Mbed OS] Removed `CY8CKIT_062_WIFI_BT_PSA`, which is no longer supported starting from Mbed OS 5.13.1.  
 * [Linux] Updated to Mbed TLS 2.19.1.
 * Added support for UNISOC SXOS SDK v8p2.1 for the UIS8908A NB-IoT board.
- 
+
 
 ## Release 3.4.0 (28.08.2019)
 
@@ -59,4 +74,3 @@ No changes.
 
 * Updated to Mbed OS 5.12.4.
 * [Linux] network Ethernet interface information is available in the `ETHERNET_LINUX_IFACE_NAME` environment variable.
-

@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// Copyright 2016-2017 ARM Ltd.
+// Copyright 2019-2020 ARM Ltd.
 //  
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,15 +24,14 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#include "mcc_common_setup.h"
 #include "factory_configurator_client.h"
 #include "ftcd_comm_base.h"
 #include "fce_common_helper.h"
 #include "mbed-trace/mbed_trace.h"
-#include "mbed-trace-helper.h"
 #include "fcc_malloc.h"
 #include "fcc_stats.h"
 #include "fcc_bundle_handler.h"
+#include "factory_client_example_utils.h"
 #ifdef MBED_CONF_MBED_CLOUD_CLIENT_SECURE_ELEMENT_SUPPORT
 #include "mcc_se_init.h"
 #endif 
@@ -64,10 +63,10 @@ static void factory_flow_task()
     setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
 #endif
 
-    mcc_platform_sw_build_info();
+    fcc_platform_sw_build_info();
 
     // Initialize storage
-    success = mcc_platform_storage_init() == 0;
+    success = fcc_platform_storage_init();
     if (success != true) {
         tr_error("Failed initializing mcc platform storage\n");
         return;
@@ -175,7 +174,8 @@ out1:
     if (factory_example_success == EXIT_SUCCESS) {
         mbed_tracef(TRACE_LEVEL_CMD, TRACE_GROUP, "Successfully completed factory flow");
     }
-    mbed_trace_helper_finish();
+
+    fcc_mbed_trace_free();
 
     fflush(stdout);
 }
@@ -199,7 +199,8 @@ int main(int argc, char * argv[])
     // careful, mbed-trace initialization may happen at this point if and only if we 
     // do NOT use mutex by passing "true" at the second param for this functions.
     // In case mutex is used, this function MUST be moved *after* pal_init()
-    success = mbed_trace_helper_init(TRACE_ACTIVE_LEVEL_ALL | TRACE_MODE_COLOR, false);
+    success = fcc_mbed_trace_initialization();
+
     if (!success) {
         // Nothing much can be done here, trace module should be initialized before file system
         // and if failed - no tr_* print is eligible.
@@ -208,9 +209,10 @@ int main(int argc, char * argv[])
 
     success = false;
 
-    success = (mcc_platform_init() == 0);
+    success = fcc_platform_initialization();
+
     if (success) {
-        success = mcc_platform_run_program(&factory_flow_task);
+        success = fcc_run_program(&factory_flow_task);
     }
 
     // Print dynamic RAM statistics in case ENABLE_RAM_PROFILING cflag introduced
@@ -218,3 +220,4 @@ int main(int argc, char * argv[])
 
     return success ? factory_example_success : EXIT_FAILURE;
 }
+

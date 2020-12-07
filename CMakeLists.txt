@@ -18,23 +18,28 @@ else()
 endif()
 
 # example source files
+set( 
+    factory-example-sources
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/factory_client_example.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/factory_client_example_utils.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/fce_${SA_PV_OS_NAME}_socket_helper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/fce_common_helper.h
+)
+
 if(PARSEC_TPM_SE_SUPPORT)
-SET(
-	factory-configurator-client-example
-	${CMAKE_CURRENT_SOURCE_DIR}/source/factory_client_example.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_${SA_PV_OS_NAME}_socket_helper.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_common_helper.h
-	${CMAKE_CURRENT_SOURCE_DIR}/source/platform/secure_element/mcc_se_init.c
-)
+    SET(
+        factory-configurator-client-example
+        ${factory-example-sources}
+        ${CMAKE_CURRENT_SOURCE_DIR}/source/platform/secure_element/mcc_se_init.c
+    )
 else()
-SET(
-	factory-configurator-client-example
-	${CMAKE_CURRENT_SOURCE_DIR}/source/factory_client_example.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_${SA_PV_OS_NAME}_socket_helper.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/source/fce_common_helper.h
-)
+    SET(
+        factory-configurator-client-example
+        ${factory-example-sources}
+    )
 endif()
 
+add_subdirectory(mbed-cloud-client ${CMAKE_CURRENT_BINARY_DIR}/mbed-cloud-client)
 
 message ("*********************************************************************")
 message ("factory-configurator-client-example = [[${factory-configurator-client-example}]]")
@@ -53,4 +58,6 @@ add_definitions(-DETHERNET_LINUX_IFACE_NAME=${TMPD})
 message("ETHERNET_LINUX_IFACE_NAME=${ETHNAME}")
 
 CREATE_TEST_LIBRARY(factory-configurator-client-example "${factory-configurator-client-example}" "")
-ADDSUBDIRS()
+
+target_link_libraries(factory-configurator-client-example mbedCloudClient platformCommon)
+
