@@ -1,5 +1,9 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.7.1 (28.01.2021)
+
+No changes.
+
 ## Release 4.7.0 (07.12.2020)
 
 * Updated to Mbed OS 6.5.0.
