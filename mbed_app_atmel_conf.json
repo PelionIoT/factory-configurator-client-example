@@ -1,7 +1,5 @@
 {
     "macros": [
-        "MBED_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\"",
-        "MBED_CLOUD_CLIENT_USER_CONFIG_FILE=\"mbed_cloud_client_user_config.h\"",
         "MBED_CONF_APP_SECURE_ELEMENT_ATCA_SUPPORT",
         "MBEDTLS_PSA_CRYPTO_SE_C"
     ],
@@ -10,7 +8,7 @@
             "platform.stdio-buffered-serial"             : true,
             "platform.stdio-baud-rate"                   : 115200,
             "platform.stdio-convert-newlines"            : true,
-            "target.features_add"                        : [ "EXPERIMENTAL_API", "BOOTLOADER", "STORAGE" ],
+            "target.features_add"                        : [ "EXPERIMENTAL_API","STORAGE" ],
             "target.c_lib"                               : "std",
             "mbed-trace.enable"                          : 1,
             "mbed-cloud-client.external-sst-support"     : 1,
@@ -18,21 +16,23 @@
             "mbed-cloud-client.psa-support"              : 1,
             "mbed-cloud-client.secure-element-support"   : 1,
             "mbed-os-atecc608a.i2c-iface-devtype"        : "ATECC608A",
-            "mbed-os-atecc608a.i2c-iface-slave_address"  : "0x6C"
+            "mbed-os-atecc608a.i2c-iface-slave_address"  : "0x6C",
+            "storage.storage_type"                      : null,
+            "storage_filesystem.filesystem"             : null,
+            "storage_filesystem.blockdevice"            : null,
+            "storage_tdb_internal.internal_base_address": null,
+            "storage_tdb_internal.internal_size"        : null,
+            "storage_filesystem.internal_base_address"  : null,
+            "storage_filesystem.rbp_internal_size"      : null,
+            "storage_filesystem.external_base_address"  : null,
+            "storage_filesystem.external_size"          : null
         },
         "K64F": {
             "lwip.tcpip-thread-stacksize"                : 2400,
-            "target.bootloader_img"                      : "tools/mbed-bootloader-k64f-block_device-kvstore-v4.1.0.bin",
+            "target.extra_labels_add"                    : ["BL_SD"],
             "target.header_offset"                       : "0xa000",
-            "target.app_offset"                          : "0xa400",
+            "target.app_offset"                          : "0xa200",
             "target.components_add"                      : ["SD", "ATECC608A"],
-            "storage_filesystem.internal_base_address"   : "(MBED_ROM_START + MBED_BOOTLOADER_SIZE)",
-            "storage_filesystem.rbp_internal_size"       : "(8*1024)",
-            "storage_filesystem.external_base_address"   : "0x0",
-            "storage_filesystem.external_size"           : "(1024*1024*64)",
-            "storage.storage_type"                       : "FILESYSTEM",
-            "storage_filesystem.filesystem"              : "LITTLE",
-            "storage_filesystem.blockdevice"             : "SD",
             "mbedtls-user-config-file"                   : "\"mbedTLSConfig_mbedOS.h\"",
             "pal-user-defined-config"                    : "\"pal_config_MbedOS.h\""
         }
@@ -40,6 +40,11 @@
     "config": {
         "main-stack-size"          : {
             "value"                : 8192
+        },
+        "user-config": {
+            "help"                 : "Defines which user configuration to use.",
+            "macro_name"           : "MBED_CLOUD_CLIENT_USER_CONFIG_FILE",
+            "value"                : "\"mbed_cloud_client_user_config.h\""
         },
         "mbedtls-user-config-file" : {
             "help"                 : "Mbetls user configuration file",

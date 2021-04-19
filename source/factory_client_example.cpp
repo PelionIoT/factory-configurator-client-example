@@ -57,11 +57,7 @@ static void factory_flow_task()
     size_t response_message_size = 0;
     bool is_storage_deleted = false;
 
-#if defined(__SXOS__)
-    mcc_platform_do_wait(3000);
-#else
     setvbuf(stdout, (char *)NULL, _IONBF, 0); /* Avoid buffering on test output */
-#endif
 
     fcc_platform_sw_build_info();
 
@@ -183,16 +179,10 @@ out1:
 /**
 * Example main
 */
-#if defined(__SXOS__)
-extern "C"
-int mbed_cloud_application_entrypoint(void)
-{
-#else
 int main(int argc, char * argv[])
 {
     (void) argc;
     (void) argv;
-#endif
 
     bool success = false;
 

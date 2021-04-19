@@ -1,8 +1,18 @@
 # Changelog for Factory Configurator Client example application
 
-## Release 4.7.1 (28.01.2021)
+## Release 4.8.0 (19.04.2021)
 
-No changes.
+* Updated to Mbed OS 6.8.0.
+* Updated cURL to 7.75.0 in `pal-platform`.
+* Updated parsec-se-driver to 0.4.0.
+* Removed support for SXOS platform in the application.
+* K66F PSA has been removed.
+* DISCO_L475VG_IOT01A target bootloader was increased from 36kB to 38kB.
+* Introduction of upgraded bootloader that is coming together with upgraded Update client.
+  * Upgraded update client bootloaders are located in prebuilt-bl folder. Legacy bootloaders are located in tools folder.
+
+## Release 4.7.1 (18.01.2021)
+No changes
 
 ## Release 4.7.0 (07.12.2020)
 
