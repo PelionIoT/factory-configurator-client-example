@@ -1,6 +1,12 @@
 # Changelog for Factory Configurator Client example application
 
-## Release 4.8.0 (19.04.2021)
+## Release 4.9.0
+
+* Updated to Mbed OS 6.9.0.
+* [LINUX] Updated Mbed TLS to 2.25.0.
+
+
+## Release 4.8.0 (XX.04.2021)
 
 * Updated to Mbed OS 6.8.0.
 * Updated cURL to 7.75.0 in `pal-platform`.
