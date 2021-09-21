@@ -1,5 +1,10 @@
 # Changelog for Factory Configurator Client example application
 
+## Release 4.11.0
+
+- Updated to Mbed OS 6.14.0.
+- * Updated Mbed TLS to 2.27.0 in `pal-platform`.
+
 ## Release 4.10.0 (30.06.2021)
 
 * Updated to Mbed OS 6.12.0.

@@ -1,4 +1,7 @@
 {
+    "macros": [
+        "FCC_ENABLE_FULL_TRACING"
+    ],
     "target_overrides": {
         "*": {
             "platform.stdio-buffered-serial"             : true,
