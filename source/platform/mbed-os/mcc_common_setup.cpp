@@ -414,8 +414,15 @@ int mcc_platform_storage_init(void)
     mcc_platform_do_wait(MCC_PLATFORM_WAIT_BEFORE_BD_INIT * SECONDS_TO_MS);
     int status = kv_init_storage_config();
     if (status != MBED_SUCCESS) {
-        printf("kv_init_storage_config() - failed, status %d\n", status);
-        return status;
+#ifdef MBED_CONF_MBED_CLOUD_CLIENT_PSA_SUPPORT
+        if (status == MBED_ERROR_UNSUPPORTED) {
+            printf("PSA enabled, ignore kv_init_storage_config() is not supported\n");
+        } else
+#endif
+        {
+            printf("kv_init_storage_config() - failed, status %d\n", status);
+            return status;
+        }
     }
     return 0;
 }

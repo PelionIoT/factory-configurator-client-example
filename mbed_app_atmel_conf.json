@@ -1,7 +1,8 @@
 {
     "macros": [
         "MBED_CONF_APP_SECURE_ELEMENT_ATCA_SUPPORT",
-        "MBEDTLS_PSA_CRYPTO_SE_C"
+        "MBEDTLS_PSA_CRYPTO_SE_C",
+        "FCC_ENABLE_FULL_TRACING"
     ],
     "target_overrides": {
         "*": {
