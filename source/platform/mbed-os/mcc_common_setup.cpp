@@ -31,6 +31,7 @@
 #include "mcc_common_config.h"
 #include "kv_config.h"
 #include "mbed_trace.h"
+#include "MbedCloudClientConfig.h"
 
 #if MBED_MAJOR_VERSION > 5
 #include "DeviceKey.h"
@@ -398,6 +399,7 @@ int mcc_platform_run_program(main_t mainFunc)
 void mcc_platform_sw_build_info(void)
 {
     printf("Application ready. Build at: " __DATE__ " " __TIME__ "\n");
+    printf("PDMC version %d.%d.%d\n", PDMC_MAJOR_VERSION, PDMC_MINOR_VERSION, PDMC_PATCH_VERSION);
 
     // The Mbed OS' master branch does not define the version numbers at all, so we need
     // some ifdeffery to keep compilations running.
