@@ -1,6 +1,10 @@
 # Changelog for Factory Configurator Client example application
 
-## Release 4.11.0
+## Release 4.11.1
+
+- Updated Parsec to 0.6.0 version. This version is compatible with Mbed TLS 2.27.0
+
+## Release 4.11.0 (17.09.2021)
 
 - Updated to Mbed OS 6.14.0.
 - * Updated Mbed TLS to 2.27.0 in `pal-platform`.
