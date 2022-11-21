@@ -14,3 +14,6 @@ add_definitions(
     -DMBED_CLOUD_CLIENT_USER_CONFIG_FILE="\\"source/mbed_cloud_client_user_config.h"\\"
     -DFCE_ETHERNET_INTERFACE
 )
+
+# curl fix - https://github.com/curl/curl/issues/7988
+set (CURL_USE_OPENSSL OFF CACHE BOOL "disable openssl" FORCE)

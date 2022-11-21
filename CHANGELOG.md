@@ -1,4 +1,8 @@
-# Changelog for Factory Configurator Client example application
+# Changelog for Izuma Factory Configurator Client example application
+
+## Release 4.13.0 (21.11.2022)
+
+- Updated `mbedTLS` from 2.27.0 to 2.28.1 for Linux targets.
 
 ## Release 4.12.0 (01.03.2021)
 
