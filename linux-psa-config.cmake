@@ -34,3 +34,6 @@ add_definitions(
     -DMBEDTLS_PSA_CRYPTO_C
     -DMBEDTLS_PSA_CRYPTO_STORAGE_C
 )
+
+# curl fix - https://github.com/curl/curl/issues/7988
+set (CURL_USE_OPENSSL OFF CACHE BOOL "disable openssl" FORCE)
